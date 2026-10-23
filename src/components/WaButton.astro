@@ -1,0 +1,22 @@
+---
+import { waLink } from '../data/site';
+
+interface Props {
+  message: string;
+  label?: string;
+  variant?: 'solid' | 'ghost';
+  arrow?: boolean;
+}
+
+const { message, label = 'Chat via WhatsApp', variant = 'solid', arrow = true } = Astro.props;
+---
+
+<a
+  class:list={['btn', variant === 'ghost' && 'btn--ghost']}
+  href={waLink(message)}
+  target="_blank"
+  rel="noopener"
+>
+  {label}
+  {arrow && <span class="btn__arrow" aria-hidden="true">→</span>}
+</a>

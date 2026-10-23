@@ -1,0 +1,323 @@
+---
+import Base from '../layouts/Base.astro';
+import Copy from '../components/Copy.astro';
+import WaButton from '../components/WaButton.astro';
+import { site } from '../data/site';
+---
+
+<Base
+  title="Cara Pemesanan & Pembayaran | Duta Koi Blitar"
+  description="Alur pemesanan koi di Duta Koi Blitar: pilih paket, minta video stok, deal, DP 50%, pelunasan dua hari sebelum kirim. Rekening resmi BCA dan ketentuan garansi."
+>
+  <header class="head">
+    <div class="wrap">
+      <h1>Empat langkah, satu rekening</h1>
+      <p class="lede measure">
+        Kami sengaja menulis alur ini panjang di halaman terpisah supaya tidak
+        ada kejutan di tengah transaksi. Baca sekali, lalu mulai dari WhatsApp.
+      </p>
+    </div>
+  </header>
+
+  <section class="section section--flush">
+    <div class="wrap">
+      <ol class="flow">
+        <li>
+          <span class="flow__n">1</span>
+          <div>
+            <h2>Tentukan paket dan kota tujuan</h2>
+            <p>
+              Sebutkan kategori (bibitan, borongan, mix, atau satuan), ukuran,
+              jumlah, dan kota Anda. Dari tiga informasi itu kami bisa langsung
+              menyiapkan pilihan yang relevan.
+            </p>
+          </div>
+        </li>
+        <li>
+          <span class="flow__n">2</span>
+          <div>
+            <h2>Minta video stok yang benar-benar ada</h2>
+            <p>
+              Customer care mengirim video ikan di bak, bukan foto katalog.
+              Sebutkan corak atau varietas yang Anda cari; kalau tidak ada, kami
+              katakan tidak ada dan tawarkan alternatif.
+            </p>
+          </div>
+        </li>
+        <li>
+          <span class="flow__n">3</span>
+          <div>
+            <h2>Deal, lalu DP 50%</h2>
+            <p>
+              Setelah harga dan ongkir disepakati, Anda membayar DP 50% dari
+              total. Pelunasan paling lambat <strong>dua hari sebelum
+              pemberangkatan</strong>. Ikan baru masuk jadwal kirim setelah DP
+              masuk.
+            </p>
+          </div>
+        </li>
+        <li>
+          <span class="flow__n">4</span>
+          <div>
+            <h2>Terima ikan, periksa, kabari kami</h2>
+            <p>
+              Garansi hidup berlaku sampai tujuan. Kalau ada ikan yang tiba
+              dalam keadaan mati, hubungi customer care di hari kedatangan agar
+              bisa segera ditangani — jangan tunggu sampai besok.
+            </p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap pay">
+      <div class="pay__main">
+        <h2>Rekening resmi</h2>
+        <p>
+          Transfer hanya ke rekening di bawah ini. Pembayaran ke rekening lain
+          bukan tanggung jawab kami, termasuk jika nama penerimanya mirip.
+        </p>
+
+        <div class="bank">
+          <div class="bank__row">
+            <span class="bank__label">Bank</span>
+            <span class="bank__value">{site.bank.name}</span>
+          </div>
+          <div class="bank__row">
+            <span class="bank__label">Nomor</span>
+            <span class="bank__value bank__value--num">{site.bank.account}</span>
+            <Copy value={site.bank.account} label="Salin nomor" />
+          </div>
+          <div class="bank__row">
+            <span class="bank__label">Atas nama</span>
+            <span class="bank__value">{site.bank.holder}</span>
+          </div>
+        </div>
+
+        <p class="small">
+          Setelah transfer, kirim bukti ke WhatsApp {site.waDisplay} agar pesanan
+          Anda dicatat dan dijadwalkan.
+        </p>
+
+        <div class="pay__actions">
+          <WaButton
+            label="Kirim bukti transfer"
+            message="Halo Duta Koi Blitar, saya sudah transfer DP untuk pesanan saya. Berikut bukti transfernya."
+          />
+        </div>
+      </div>
+
+      <aside class="pay__aside">
+        <h3>Pembayaran COD</h3>
+        <p>
+          Tersedia untuk pelanggan di sebagian Jawa Timur dan Jawa Tengah. Area
+          di luar itu tetap bisa memakai transfer. Tanyakan ke customer care
+          apakah kota Anda termasuk.
+        </p>
+        <h3>Ongkir</h3>
+        <p>
+          Semua harga paket belum termasuk ongkir. Kami cek ongkir berdasarkan
+          kota dan perkiraan berat box sebelum Anda memutuskan.
+        </p>
+        <h3>Jam layanan</h3>
+        <p>{site.hours}. Pesan di luar jam tersebut dijawab pada hari kerja
+          berikutnya.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>Tiga hal yang sering ditanyakan</h2>
+      <div class="claims">
+        <div>
+          <h3>Ikan mati saat tiba</h3>
+          <p>
+            Garansi hidup berlaku sampai tujuan. Hubungi customer care di hari
+            kedatangan; prosedur penanganannya dijelaskan langsung oleh mereka.
+          </p>
+        </div>
+        <div>
+          <h3>Harga dan ongkir</h3>
+          <p>
+            Harga paket belum termasuk ongkir. Kami cek ongkir ke kota Anda
+            sebelum pengiriman, dan Anda memutuskan setelah tahu totalnya.
+          </p>
+        </div>
+        <div>
+          <h3>Rekening pembayaran</h3>
+          <p>
+            Hanya rekening BCA di atas yang resmi. Transfer ke rekening lain di
+            luar itu bukan tanggung jawab kami.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head {
+    padding-block: clamp(2.25rem, 4.5vw, 3.75rem) clamp(2rem, 3.5vw, 2.75rem);
+  }
+
+  .head h1 {
+    margin-block: 0.7rem 1.2rem;
+  }
+
+  .flow {
+    list-style: none;
+    border-top: 1px solid var(--ink);
+  }
+
+  .flow li {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    gap: 1.5rem;
+    padding-block: 1.9rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .flow__n {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    color: var(--accent);
+    line-height: 1;
+    padding-top: 0.3rem;
+  }
+
+  .flow h2 {
+    font-size: clamp(1.35rem, 2vw, 1.7rem);
+    margin-bottom: 0.6rem;
+  }
+
+  .flow p {
+    max-width: 62ch;
+    color: var(--ink-soft);
+  }
+
+  .pay {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+
+  .pay__main h2 {
+    margin-bottom: 1rem;
+  }
+
+  .bank {
+    border-top: 1px solid var(--ink);
+    margin-block: 1.5rem 1.2rem;
+  }
+
+  .bank__row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-block: 0.85rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .bank__label {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    width: 6rem;
+    flex-shrink: 0;
+  }
+
+  .bank__value {
+    font-size: 1.05rem;
+    margin-right: auto;
+  }
+
+  .bank__value--num {
+    font-family: var(--serif);
+    font-size: 1.45rem;
+    letter-spacing: 0.04em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .pay__actions {
+    margin-top: 1.4rem;
+  }
+
+  .pay__aside {
+    border-left: 1px solid var(--rule);
+    padding-left: clamp(1rem, 2vw, 2rem);
+  }
+
+  .pay__aside h3 {
+    font-size: 1.05rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .pay__aside p {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin-bottom: 1.4rem;
+  }
+
+  .pay__aside p:last-child {
+    margin-bottom: 0;
+  }
+
+  .claims {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 1.75rem;
+    border-top: 1px solid var(--ink);
+    padding-top: 1.5rem;
+  }
+
+  .claims h3 {
+    margin-bottom: 0.5rem;
+  }
+
+  .claims p {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 900px) {
+    .pay {
+      grid-template-columns: 1fr;
+    }
+    .pay__aside {
+      border-left: 0;
+      border-top: 1px solid var(--rule);
+      padding-left: 0;
+      padding-top: 1.5rem;
+    }
+    .claims {
+      grid-template-columns: 1fr;
+      gap: 1.4rem;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .flow li {
+      grid-template-columns: 1fr;
+      gap: 0.4rem;
+    }
+    .flow__n {
+      font-size: 1.1rem;
+    }
+    .bank__row {
+      flex-wrap: wrap;
+      gap: 0.35rem 1rem;
+    }
+    .bank__value {
+      width: 100%;
+      order: 3;
+    }
+  }
+</style>

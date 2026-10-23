@@ -1,0 +1,75 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import BottomNav from '../components/BottomNav.astro';
+import FloatingWa from '../components/FloatingWa.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  waMessage?: string;
+  waLabel?: string;
+}
+
+const {
+  title,
+  description,
+  image = '/img/jumbo-tangan.webp',
+  waMessage = 'Halo Duta Koi Blitar, saya mau tanya stok koi yang tersedia hari ini.',
+  waLabel = 'Tanya stok',
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: site.name,
+  url: site.url,
+  image: new URL(image, site.url).href,
+  telephone: `+${site.waNumber}`,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address.street,
+    addressLocality: site.address.locality,
+    addressRegion: site.address.region,
+    postalCode: site.address.postalCode,
+    addressCountry: 'ID',
+  },
+  openingHours: 'Mo-Su 08:00-16:30',
+  description,
+};
+---
+
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/img/logo-duta-koi.png" type="image/png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(image, site.url).href} />
+    <meta name="theme-color" content="#f4f1e9" />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body>
+    <a class="skip" href="#main">Langsung ke isi</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <FloatingWa message={waMessage} label={waLabel} />
+    <BottomNav />
+  </body>
+</html>

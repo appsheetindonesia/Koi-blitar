@@ -1,0 +1,55 @@
+---
+import { site } from '../data/site';
+---
+
+<dl class="facts">
+  <div>
+    <dt>Garansi hidup</dt>
+    <dd>Ikan dijamin hidup sampai tujuan. Kalau ada ikan yang tiba dalam keadaan mati, hubungi customer care di hari kedatangan.</dd>
+  </div>
+  <div>
+    <dt>Ongkir</dt>
+    <dd>Semua harga di situs ini belum termasuk ongkir. Kami cek ongkir ke kota Anda sebelum kirim.</dd>
+  </div>
+  <div>
+    <dt>Pembayaran</dt>
+    <dd>DP 50% saat deal, pelunasan maksimal 2 hari sebelum berangkat. COD untuk sebagian Jawa Timur dan Jawa Tengah.</dd>
+  </div>
+  <div>
+    <dt>Sebelum kirim</dt>
+    <dd>Ikan yang dikirim sudah lolos karantina dan quality control. Video stok dikirim lebih dulu sesuai permintaan Anda.</dd>
+  </div>
+  <div>
+    <dt>Jam layanan</dt>
+    <dd>{site.hours}. Pesan di luar jam ini tetap masuk dan dijawab pagi berikutnya.</dd>
+  </div>
+</dl>
+
+<style>
+  .facts {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 0;
+    border-top: 1px solid var(--ink);
+  }
+
+  .facts > div {
+    padding: 1.15rem 1.4rem 1.15rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .facts dt {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .facts dd {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 34ch;
+  }
+</style>

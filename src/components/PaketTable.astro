@@ -1,0 +1,163 @@
+---
+import { waLink } from '../data/site';
+
+interface Item {
+  judul: string;
+  ekor: string;
+  ukuran: string;
+  grade: string;
+  catatan?: string;
+}
+
+interface Props {
+  items: Item[];
+  kategori: string;
+}
+
+const { items, kategori } = Astro.props;
+---
+
+<table class="spec paket">
+  <thead>
+    <tr>
+      <th scope="col">Paket</th>
+      <th scope="col">Jumlah</th>
+      <th scope="col">Ukuran</th>
+      <th scope="col">Grade</th>
+      <th scope="col"><span class="sr">Aksi</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    {items.map((item) => (
+      <tr
+        data-wa-msg={waLink(
+          `Halo Duta Koi Blitar, saya mau tanya ${item.judul} kategori ${kategori} (${item.ukuran}, grade ${item.grade}). Stoknya masih ada?`
+        )}
+        data-wa-label={`Tanya ${item.judul}`}
+      >
+        <td data-label="Paket">
+          <span class="spec__name">{item.judul}</span>
+          {item.catatan && <span class="paket__note">{item.catatan}</span>}
+        </td>
+        <td data-label="Jumlah">{item.ekor}</td>
+        <td data-label="Ukuran">{item.ukuran}</td>
+        <td data-label="Grade">{item.grade}</td>
+        <td class="paket__action">
+          <a
+            href={waLink(
+              `Halo Duta Koi Blitar, saya mau tanya ${item.judul} kategori ${kategori} (${item.ukuran}, grade ${item.grade}). Stoknya masih ada?`
+            )}
+            target="_blank"
+            rel="noopener"
+          >
+            Tanya stok <span aria-hidden="true">→</span>
+          </a>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+<style>
+  .paket td {
+    padding-block: 1.15rem;
+  }
+
+  .paket tbody tr {
+    transition: background-color 120ms ease;
+  }
+
+  .paket tbody tr:hover {
+    background: var(--paper-deep);
+  }
+
+  .paket__note {
+    display: block;
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: var(--ink-faint);
+    margin-top: 0.3rem;
+    max-width: 34ch;
+  }
+
+  .paket__action {
+    white-space: nowrap;
+  }
+
+  .paket__action a {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule-strong);
+    padding-bottom: 0.15rem;
+    transition: border-color 140ms ease, color 140ms ease;
+  }
+
+  .paket__action a:hover {
+    color: var(--accent-ink);
+    border-bottom-color: var(--accent);
+  }
+
+  .sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 720px) {
+    .paket thead {
+      display: none;
+    }
+
+    .paket,
+    .paket tbody,
+    .paket tr,
+    .paket td {
+      display: block;
+      width: 100%;
+    }
+
+    .paket tr {
+      padding-block: 1.1rem;
+      border-bottom: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.45rem 1rem;
+    }
+
+    .paket tr:last-child {
+      border-bottom: 0;
+    }
+
+    .paket td {
+      padding: 0;
+      border: 0;
+      font-size: 0.9rem;
+    }
+
+    .paket td:first-child {
+      grid-column: 1 / -1;
+    }
+
+    .paket td:not(:first-child):not(.paket__action)::before {
+      content: attr(data-label) ': ';
+      color: var(--ink-faint);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .paket__action {
+      grid-column: 1 / -1;
+      text-align: left;
+      margin-top: 0.5rem;
+    }
+
+    .paket__action a {
+      display: inline-block;
+    }
+  }
+</style>

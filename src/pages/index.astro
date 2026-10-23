@@ -1,0 +1,402 @@
+---
+import Base from '../layouts/Base.astro';
+import WaButton from '../components/WaButton.astro';
+import OrderFacts from '../components/OrderFacts.astro';
+import { site, paketBibitan, paketBorongan, paketCustome, varietasSatuan } from '../data/site';
+
+const kategori = [
+  {
+    href: '/paket-bibitan',
+    nama: 'Bibitan',
+    ringkas: '20–100 ekor, 10–20 cm. Untuk pembesaran atau jualan lagi.',
+    gambar: '/img/bibitan-anakan.webp',
+    alt: 'Puluhan anakan koi warna-warni berenang di ember biru',
+  },
+  {
+    href: '/paket-borongan',
+    nama: 'Borongan',
+    ringkas: '5–30 ekor ukuran 20 cm ke atas, grade A dan A pilihan.',
+    gambar: '/img/borongan-lima.webp',
+    alt: 'Lima koi Kohaku dan Sanke di bak tarpaulin biru',
+  },
+  {
+    href: '/paket-custome',
+    nama: 'Mix custom',
+    ringkas: 'Anda tentukan komposisi jumbo, super, dan minion.',
+    gambar: '/img/mix-varietas.webp',
+    alt: 'Koi berbagai varietas dan warna berkumpul di ember biru',
+  },
+  {
+    href: '/paket-satuan',
+    nama: 'Satuan',
+    ringkas: 'Satu ekor pilihan, grade SQ, untuk koleksi.',
+    gambar: '/img/kohaku.webp',
+    alt: 'Koi Kohaku putih dengan corak merah difoto dari atas',
+  },
+];
+---
+
+<Base
+  title="Duta Koi Blitar — Koi langsung dari farm Modangan, Nglegok"
+  description="Bibitan, borongan, mix custom, dan koi satuan grade SQ langsung dari farm di Modangan, Nglegok, Blitar. Garansi hidup sampai tujuan, karantina dan QC sebelum kirim."
+>
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div class="hero__copy">
+        <p class="dateline">Farm di Modangan, Nglegok, Blitar</p>
+        <h1>
+          Koi Blitar, langsung<br />
+          dari farm di Modangan.
+        </h1>
+        <p class="lede">
+          Harga keluar langsung dari farm, bukan dari tangan kedua. Setiap ikan
+          yang dikirim sudah lolos karantina dan quality control, dengan garansi
+          hidup sampai tujuan.
+        </p>
+
+        <div class="hero__actions">
+          <a class="btn" href="#pilih-paket">Pilih paket <span class="btn__arrow" aria-hidden="true">→</span></a>
+          <WaButton
+            variant="ghost"
+            label="Tanya stok hari ini"
+            message="Halo Duta Koi Blitar, saya mau tanya stok koi yang tersedia hari ini. Boleh dikirim foto/videonya?"
+          />
+        </div>
+
+        <ul class="hero__facts">
+          <li><strong>Garansi hidup</strong> sampai tujuan</li>
+          <li><strong>14 customer care</strong> menjawab permintaan ikan</li>
+          <li><strong>COD</strong> sebagian Jatim &amp; Jateng</li>
+        </ul>
+      </div>
+
+      <figure class="hero__figure">
+        <img
+          class="photo"
+          src="/img/jumbo-tangan.webp"
+          alt="Koi jumbo corak Showa dipegang dengan kedua tangan di atas bak biru"
+          width="1100"
+          height="1100"
+          fetchpriority="high"
+        />
+        <figcaption class="figure-note">
+          Foto diambil di bak farm, bukan di studio. Sebelum deal, kami kirim
+          video ikan yang sesuai permintaan Anda.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" id="pilih-paket">
+    <div class="wrap">
+      <div class="rule-head">
+        <h2>Empat cara membeli</h2>
+        <p class="small measure" style="margin:0">
+          Mulai dari jumlah dan ukuran yang Anda butuhkan. Setiap paket punya
+          tombol tanya stok sendiri, jadi pesannya langsung menyebut paketnya.
+        </p>
+      </div>
+
+      <ul class="kategori">
+        {kategori.map((k) => (
+          <li>
+            <a href={k.href} class="kategori__link">
+              <img class="photo" src={k.gambar} alt={k.alt} width="900" height="900" loading="lazy" />
+              <span class="kategori__body">
+                <span class="kategori__name">{k.nama}</span>
+                <span class="kategori__text">{k.ringkas}</span>
+                <span class="kategori__more">Lihat daftar paket <span aria-hidden="true">→</span></span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap band">
+      <div class="band__text">
+        <h2>Stok bergerak setiap hari</h2>
+        <p class="lede">
+          Jumlah, ukuran, dan corak yang tersedia berubah mengikuti panen dan
+          penjualan. Karena itu kami tidak memasang harga mati di halaman ini:
+          sebutkan paket dan kota Anda, kami balas dengan harga, ongkir, dan
+          video ikan yang benar-benar ada di bak saat itu.
+        </p>
+        <p class="small">
+          Contoh isi pesan: “Paket borongan 20 ekor, ukuran 25 cm up, kirim ke
+          Surabaya. Stok dan harganya berapa?”
+        </p>
+      </div>
+      <div class="band__aside">
+        <p class="band__label">Jumlah stok per kategori</p>
+        <dl class="counts">
+          <div><dt>Bibitan</dt><dd>{paketBibitan.length} paket</dd></div>
+          <div><dt>Borongan</dt><dd>{paketBorongan.length} paket</dd></div>
+          <div><dt>Mix custom</dt><dd>{paketCustome.length} paket</dd></div>
+          <div><dt>Satuan</dt><dd>{varietasSatuan.length} varietas</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="rule-head">
+        <h2>Yang perlu Anda tahu sebelum transfer</h2>
+      </div>
+      <OrderFacts />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap closer">
+      <div>
+        <h2>Belum yakin pilih yang mana?</h2>
+        <p class="lede measure">
+          Ceritakan ukuran kolam, jumlah ikan yang diinginkan, dan budget kasar
+          Anda. Customer care kami akan menyarankan paket yang paling masuk akal
+          — termasuk kalau jawabannya “ambil paket yang lebih kecil dulu”.
+        </p>
+      </div>
+      <div class="closer__actions">
+        <WaButton
+          label="Konsultasi via WhatsApp"
+          message="Halo Duta Koi Blitar, saya mau konsultasi pilih paket koi. Ukuran kolam saya sekitar ... meter, rencananya untuk ... "
+        />
+        <a class="btn btn--ghost" href="/cara-pemesanan">Baca cara pemesanan</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    padding-block: clamp(2.5rem, 5vw, 4.5rem) clamp(3rem, 6vw, 5rem);
+  }
+
+  .hero__grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+
+  .hero__copy h1 {
+    margin-block: 0.85rem 1.4rem;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-block: 2rem 2.2rem;
+  }
+
+  .hero__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1.6rem;
+    list-style: none;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--rule);
+    font-size: 0.87rem;
+    color: var(--ink-soft);
+  }
+
+  .hero__facts li {
+    position: relative;
+  }
+
+  .hero__facts strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .hero__figure {
+    margin: 0;
+    position: sticky;
+    top: 1.5rem;
+  }
+
+  .hero__figure .photo {
+    aspect-ratio: 1 / 1;
+    object-position: center 35%;
+  }
+
+  .kategori {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 2.25rem;
+  }
+
+  .kategori__link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+  }
+
+  .kategori__link .photo {
+    aspect-ratio: 4 / 5;
+    transition: filter 200ms ease;
+  }
+
+  .kategori__link:hover .photo {
+    filter: brightness(1.04) contrast(1.02);
+  }
+
+  .kategori__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--rule);
+    margin-top: 0.85rem;
+    flex: 1;
+  }
+
+  .kategori__link:hover .kategori__body {
+    border-top-color: var(--ink);
+  }
+
+  .kategori__name {
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    line-height: 1.1;
+  }
+
+  .kategori__text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  .kategori__more {
+    margin-top: auto;
+    padding-top: 0.7rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--accent-ink);
+  }
+
+  .band {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: start;
+  }
+
+  .band h2 {
+    margin-bottom: 1rem;
+  }
+
+  .band__aside {
+    border-left: 1px solid var(--rule);
+    padding-left: clamp(1rem, 2vw, 2rem);
+  }
+
+  .band__label {
+    font-size: 0.72rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+  }
+
+  .counts {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .counts > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.6rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .counts > div:last-child {
+    border-bottom: 0;
+  }
+
+  .counts dd {
+    margin: 0;
+    color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .closer {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: center;
+  }
+
+  .closer h2 {
+    margin-bottom: 1rem;
+  }
+
+  .closer__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    align-items: flex-start;
+  }
+
+  @media (max-width: 980px) {
+    .hero__grid {
+      grid-template-columns: 1fr;
+    }
+    .hero__figure {
+      position: static;
+      order: -1;
+    }
+    .hero__figure .photo {
+      aspect-ratio: 16 / 11;
+    }
+    .kategori {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .band,
+    .closer {
+      grid-template-columns: 1fr;
+    }
+    .band__aside {
+      border-left: 0;
+      border-top: 1px solid var(--rule);
+      padding-left: 0;
+      padding-top: 1.2rem;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .kategori {
+      grid-template-columns: 1fr;
+    }
+    .kategori__link {
+      display: grid;
+      grid-template-columns: 6.5rem 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+    .kategori__link .photo {
+      aspect-ratio: 1 / 1;
+    }
+    .kategori__body {
+      border-top: 0;
+      margin-top: 0;
+      padding-top: 0;
+    }
+    .hero__actions .btn {
+      flex: 1 1 100%;
+      justify-content: center;
+    }
+  }
+</style>

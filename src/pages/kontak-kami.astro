@@ -1,0 +1,365 @@
+---
+import Base from '../layouts/Base.astro';
+import Copy from '../components/Copy.astro';
+import { site, waLink } from '../data/site';
+---
+
+<Base
+  title="Kontak Duta Koi Blitar — WhatsApp, alamat, jam layanan"
+  description="Hubungi Duta Koi Blitar lewat WhatsApp +62 857-9944-9920. Farm di Desa Modangan, Kecamatan Nglegok, Kabupaten Blitar. Buka setiap hari 08.00–16.30 WIB."
+>
+  <header class="head">
+    <div class="wrap">
+      <h1>Sebutkan kebutuhan Anda, kami cek baknya</h1>
+      <p class="lede measure">
+        Kami tidak memakai bot. Pesan masuk ke customer care yang memegang
+        daftar stok harian, jadi jawaban pertama biasanya berisi video ikan yang
+        tersedia saat itu.
+      </p>
+    </div>
+  </header>
+
+  <section class="section section--flush">
+    <div class="wrap contact">
+      <form class="builder" id="builder" novalidate>
+        <h2>Tulis pesan, lalu kirim lewat WhatsApp</h2>
+        <p class="small">
+          Isi yang Anda tahu saja. Pesan akan terbuka di WhatsApp dan bisa Anda
+          ubah sebelum dikirim — tidak ada yang terkirim otomatis.
+        </p>
+
+        <div class="field">
+          <label for="nama">Nama</label>
+          <input id="nama" name="nama" type="text" autocomplete="name" placeholder="Nama Anda" />
+        </div>
+
+        <div class="field">
+          <label for="kota">Kota tujuan</label>
+          <input id="kota" name="kota" type="text" autocomplete="address-level2" placeholder="Contoh: Surabaya" />
+        </div>
+
+        <div class="field">
+          <label for="paket">Paket yang diminati</label>
+          <select id="paket" name="paket">
+            <option value="">Belum tahu, minta saran</option>
+            <option>Paket bibitan</option>
+            <option>Paket borongan</option>
+            <option>Paket mix custom</option>
+            <option>Paket satuan (grade SQ)</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="catatan">Ukuran, jumlah, atau varietas yang dicari</label>
+          <textarea
+            id="catatan"
+            name="catatan"
+            rows="4"
+            placeholder="Contoh: 20 ekor ukuran 25 cm up, utamakan Kohaku dan Sanke"
+          ></textarea>
+        </div>
+
+        <button class="btn" type="submit">
+          Buka WhatsApp <span class="btn__arrow" aria-hidden="true">→</span>
+        </button>
+
+        <p class="builder__hint" id="hint" role="status" aria-live="polite"></p>
+      </form>
+
+      <aside class="details">
+        <div class="details__block">
+          <h3>WhatsApp</h3>
+          <p class="details__num">{site.waDisplay}</p>
+          <div class="details__actions">
+            <Copy value={site.waDisplay} label="Salin nomor" />
+            <a
+              class="details__link"
+              href={waLink('Halo Duta Koi Blitar, saya mau tanya stok koi.')}
+              target="_blank"
+              rel="noopener">Buka chat <span aria-hidden="true">→</span></a
+            >
+          </div>
+        </div>
+
+        <div class="details__block">
+          <h3>Kantor I</h3>
+          <p>
+            {site.address.street}<br />
+            {site.address.locality}, {site.address.region} {site.address.postalCode}
+          </p>
+        </div>
+
+        <div class="details__block">
+          <h3>MaBes Duta Koi II</h3>
+          <p>
+            Desa Modangan, Kec. Nglegok<br />
+            Kabupaten Blitar, Jawa Timur 66181
+          </p>
+          <p class="small">
+            Titik kandang kedua. Kedatangan sebaiknya dijanjikan lebih dulu
+            karena tim sering berada di kolam.
+          </p>
+        </div>
+
+        <div class="details__block">
+          <h3>Jam layanan</h3>
+          <p>{site.hours}</p>
+        </div>
+
+        <div class="details__block">
+          <h3>Pembayaran</h3>
+          <p>
+            {site.bank.name} {site.bank.account}<br />
+            a.n. {site.bank.holder}
+          </p>
+          <div class="details__actions">
+            <Copy value={site.bank.account} label="Salin rekening" />
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>Pertanyaan yang paling sering masuk</h2>
+      <dl class="faq">
+        <div>
+          <dt>Apakah harga sudah termasuk ongkir?</dt>
+          <dd>Belum. Ongkir dihitung per kota dan berat box, dan kami sampaikan sebelum Anda memutuskan.</dd>
+        </div>
+        <div>
+          <dt>Bisa minta video dulu sebelum bayar?</dt>
+          <dd>Bisa, dan kami sarankan begitu. Video menunjukkan ikan yang benar-benar akan dikirim.</dd>
+        </div>
+        <div>
+          <dt>Ada garansi kalau ikan mati?</dt>
+          <dd>Ada, garansi hidup sampai tujuan. Kalau ada ikan yang tiba dalam keadaan mati, hubungi customer care di hari kedatangan.</dd>
+        </div>
+        <div>
+          <dt>Kirim ke luar Jawa?</dt>
+          <dd>Bisa. Waktu tempuh dan ongkir menyesuaikan ekspedisi yang melayani rute tersebut.</dd>
+        </div>
+        <div>
+          <dt>Bisa COD?</dt>
+          <dd>Untuk sebagian wilayah Jawa Timur dan Jawa Tengah. Tanyakan kota Anda ke customer care.</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const form = document.getElementById('builder') as HTMLFormElement | null;
+  const hint = document.getElementById('hint');
+  const waNumber = '6285799449920';
+
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const nama = String(data.get('nama') ?? '').trim();
+    const kota = String(data.get('kota') ?? '').trim();
+    const paket = String(data.get('paket') ?? '').trim();
+    const catatan = String(data.get('catatan') ?? '').trim();
+
+    const lines = ['Halo Duta Koi Blitar, saya mau tanya.'];
+    if (nama) lines.push(`Nama: ${nama}`);
+    if (kota) lines.push(`Kota tujuan: ${kota}`);
+    lines.push(`Paket: ${paket || 'belum tahu, minta saran'}`);
+    if (catatan) lines.push(`Kebutuhan: ${catatan}`);
+    lines.push('Boleh dikirim stok dan videonya?');
+
+    const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(lines.join('\n'))}`;
+    window.open(url, '_blank', 'noopener');
+
+    if (hint) {
+      hint.textContent = 'WhatsApp dibuka di tab baru. Pesan belum terkirim sampai Anda menekan kirim di sana.';
+    }
+  });
+</script>
+
+<style>
+  .head {
+    padding-block: clamp(2.25rem, 4.5vw, 3.75rem) clamp(2rem, 3.5vw, 2.75rem);
+  }
+
+  .head h1 {
+    margin-block: 0.7rem 1.2rem;
+  }
+
+  .contact {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+
+  .builder h2 {
+    font-size: clamp(1.5rem, 2.4vw, 1.9rem);
+    margin-bottom: 0.6rem;
+  }
+
+  .builder > .small {
+    margin-bottom: 1.8rem;
+    max-width: 46ch;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .field label {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    font-family: var(--sans);
+    font-size: 1rem;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius);
+    padding: 0.7rem 0.8rem;
+    transition: border-color 140ms ease, background-color 140ms ease;
+    width: 100%;
+  }
+
+  .field textarea {
+    resize: vertical;
+    line-height: 1.5;
+  }
+
+  .field input:hover,
+  .field select:hover,
+  .field textarea:hover {
+    border-color: var(--ink-faint);
+  }
+
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: #fffdf7;
+  }
+
+  .field input::placeholder,
+  .field textarea::placeholder {
+    color: var(--ink-faint);
+    opacity: 0.75;
+  }
+
+  .builder__hint {
+    margin-top: 0.9rem;
+    font-size: 0.85rem;
+    color: var(--accent-ink);
+    min-height: 1.2em;
+  }
+
+  .details {
+    border-left: 1px solid var(--rule);
+    padding-left: clamp(1rem, 2vw, 2rem);
+  }
+
+  .details__block {
+    padding-block: 1.1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .details__block:first-child {
+    padding-top: 0;
+  }
+
+  .details__block:last-child {
+    border-bottom: 0;
+  }
+
+  .details h3 {
+    font-size: 1rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .details p {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  .details__num {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 0.6rem;
+  }
+
+  .details__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+  }
+
+  .details__link {
+    font-size: 0.83rem;
+    font-weight: 600;
+    color: var(--accent-ink);
+    text-decoration: none;
+  }
+
+  .details__link:hover {
+    text-decoration: underline;
+  }
+
+  .faq {
+    margin: 1.75rem 0 0;
+    border-top: 1px solid var(--ink);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 3rem;
+  }
+
+  .faq > div {
+    padding-block: 1.05rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .faq dt {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .faq dd {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 46ch;
+  }
+
+  @media (max-width: 900px) {
+    .contact {
+      grid-template-columns: 1fr;
+    }
+    .details {
+      border-left: 0;
+      border-top: 1px solid var(--rule);
+      padding-left: 0;
+      padding-top: 1.5rem;
+    }
+    .faq {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+</style>

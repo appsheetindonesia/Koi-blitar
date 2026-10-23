@@ -1,0 +1,98 @@
+---
+import Base from './Base.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  heading: string;
+  intro: string;
+  image: string;
+  imageAlt: string;
+  caption: string;
+  waMessage: string;
+  waLabel: string;
+}
+
+const { title, description, heading, intro, image, imageAlt, caption, waMessage, waLabel } =
+  Astro.props;
+---
+
+<Base title={title} description={description} waMessage={waMessage} waLabel={waLabel}>
+  <article>
+    <header class="phead">
+      <div class="wrap phead__grid">
+        <div>
+          <h1>{heading}</h1>
+          <p class="lede measure">{intro}</p>
+        </div>
+        <figure class="phead__figure">
+          <img class="photo" src={image} alt={imageAlt} width="1000" height="1000" fetchpriority="high" />
+          <figcaption class="figure-note">{caption}</figcaption>
+        </figure>
+      </div>
+    </header>
+
+    <div class="wrap">
+      <slot />
+    </div>
+
+    <aside class="wrap notice">
+      <p>
+        Semua harga belum termasuk ongkir. DP 50% saat deal, pelunasan paling
+        lambat dua hari sebelum ikan berangkat, dan pengiriman bergaransi hidup
+        sampai tujuan.
+        <a href="/cara-pemesanan">Rincian cara pemesanan</a>.
+      </p>
+    </aside>
+  </article>
+</Base>
+
+<style>
+  .phead {
+    padding-block: clamp(2.25rem, 4.5vw, 3.75rem) clamp(2rem, 4vw, 3.25rem);
+  }
+
+  .phead__grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: center;
+  }
+
+  .phead h1 {
+    margin-block: 0.7rem 1.2rem;
+  }
+
+  .phead__figure {
+    margin: 0;
+  }
+
+  .phead__figure .photo {
+    aspect-ratio: 5 / 4;
+  }
+
+  .notice {
+    padding-block: 0 4rem;
+  }
+
+  .notice p {
+    border-top: 1px solid var(--rule);
+    padding-top: 1.1rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 68ch;
+  }
+
+  @media (max-width: 900px) {
+    .phead__grid {
+      grid-template-columns: 1fr;
+    }
+    .phead__figure {
+      order: -1;
+    }
+    .phead__figure .photo {
+      aspect-ratio: 16 / 10;
+    }
+  }
+</style>

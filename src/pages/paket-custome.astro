@@ -1,0 +1,125 @@
+---
+import PaketPage from '../layouts/PaketPage.astro';
+import PaketTable from '../components/PaketTable.astro';
+import WaButton from '../components/WaButton.astro';
+import { paketCustome } from '../data/site';
+---
+
+<PaketPage
+  title="Paket Mix Custom Koi — susun sendiri komposisinya | Duta Koi Blitar"
+  description="Buat paket koi sesuai selera: campur jumbo, jumbo super, dan minion dalam satu box. Langsung dari farm Modangan, Blitar."
+  heading="Satu box, isi Anda yang tentukan"
+  intro="Kalau Anda butuh campuran — misalnya dua jumbo untuk kolam depan dan sepuluh minion untuk bak pembesaran — paket mix disusun sesuai permintaan, dan bisa dikombinasikan dengan paket lain."
+  image="/img/mix-varietas.webp"
+  imageAlt="Koi aneka varietas dan ukuran berkumpul di ember biru"
+  waMessage="Halo Duta Koi Blitar, saya mau paket mix custom. Rinciannya: ... ekor ukuran ... cm, ... ekor ukuran ... cm."
+  waLabel="Susun paket mix"
+  caption="Contoh isi paket mix: varietas dan ukuran bercampur dalam satu bak sortir."
+>
+  <section class="section">
+    <div class="rule-head">
+      <h2>Empat dasar yang bisa dicampur</h2>
+      <p class="small" style="margin:0">Pilih satu atau gabungkan beberapa.</p>
+    </div>
+    <PaketTable items={paketCustome} kategori="paket mix" />
+  </section>
+
+  <section class="section">
+    <div class="split">
+      <div>
+        <h2>Cara menyusun permintaan yang mudah kami penuhi</h2>
+        <p>
+          Sebutkan tiga hal: ukuran yang diinginkan, jumlah per ukuran, dan
+          varietas favorit kalau ada. Contohnya: “3 ekor 45 cm up, 5 ekor 30 cm,
+          10 ekor 15 cm, utamakan Kohaku dan Sanke.” Dengan begitu kami bisa
+          langsung memeriksa bak yang sesuai, bukan menebak.
+        </p>
+        <p>
+          Kalau stok untuk satu ukuran sedang kosong, kami tawarkan pengganti
+          dengan ukuran terdekat dan mengirim videonya. Anda tetap bisa menolak
+          sebelum DP.
+        </p>
+      </div>
+      <div class="split__aside">
+        <h3>Batas yang perlu diketahui</h3>
+        <dl class="limits">
+          <div>
+            <dt>Jumlah</dt>
+            <dd>Mengikuti ukuran box dan rute pengiriman, bukan angka tetap.</dd>
+          </div>
+          <div>
+            <dt>Varietas</dt>
+            <dd>Sesuai stok. Kami tidak menjanjikan varietas tertentu sebelum video dikirim.</dd>
+          </div>
+          <div>
+            <dt>Grade</dt>
+            <dd>Jumbo super dan super pilihan jumlahnya terbatas setiap panen.</dd>
+          </div>
+        </dl>
+        <WaButton
+          label="Susun paket mix saya"
+          message="Halo Duta Koi Blitar, saya mau paket mix custom. Rinciannya: ... ekor ukuran ... cm, ... ekor ukuran ... cm. Varietas favorit: ... . Kirim ke ... ."
+        />
+      </div>
+    </div>
+  </section>
+</PaketPage>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+
+  .split h2 {
+    margin-bottom: 1.1rem;
+  }
+
+  .split__aside {
+    border-left: 1px solid var(--rule);
+    padding-left: clamp(1rem, 2vw, 2rem);
+  }
+
+  .split__aside h3 {
+    margin-bottom: 1rem;
+  }
+
+  .limits {
+    margin: 0 0 1.6rem;
+    font-size: 0.93rem;
+  }
+
+  .limits > div {
+    padding-block: 0.65rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .limits > div:last-child {
+    border-bottom: 0;
+  }
+
+  .limits dt {
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+  }
+
+  .limits dd {
+    margin: 0;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 900px) {
+    .split {
+      grid-template-columns: 1fr;
+    }
+    .split__aside {
+      border-left: 0;
+      border-top: 1px solid var(--rule);
+      padding-left: 0;
+      padding-top: 1.4rem;
+    }
+  }
+</style>

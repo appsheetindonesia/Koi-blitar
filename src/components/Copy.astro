@@ -1,0 +1,99 @@
+---
+interface Props {
+  value: string;
+  label?: string;
+  copiedLabel?: string;
+}
+const { value, label = 'Salin', copiedLabel = 'Tersalin' } = Astro.props;
+---
+
+<button class="copy" type="button" data-copy={value} data-copied-label={copiedLabel}>
+  <span class="copy__label">{label}</span>
+</button>
+
+<script>
+  function copyWithFallback(value: string): boolean {
+    const field = document.createElement('textarea');
+    field.value = value;
+    field.setAttribute('readonly', '');
+    field.style.position = 'fixed';
+    field.style.top = '-1000px';
+    document.body.appendChild(field);
+    field.select();
+    let ok = false;
+    try {
+      ok = document.execCommand('copy');
+    } catch {
+      ok = false;
+    }
+    field.remove();
+    return ok;
+  }
+
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.copy');
+
+  for (const button of buttons) {
+    const label = button.querySelector('.copy__label');
+    if (!label) continue;
+    const original = label.textContent ?? 'Salin';
+    let timer: number | undefined;
+
+    button.addEventListener('click', async () => {
+      const value = button.dataset.copy ?? '';
+      let ok = false;
+
+      if (navigator.clipboard?.writeText) {
+        try {
+          await navigator.clipboard.writeText(value);
+          ok = true;
+        } catch {
+          ok = false;
+        }
+      }
+
+      if (!ok) ok = copyWithFallback(value);
+
+      label.textContent = ok ? (button.dataset.copiedLabel ?? 'Tersalin') : 'Salin manual';
+      button.dataset.state = ok ? 'done' : 'failed';
+
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        label.textContent = original;
+        delete button.dataset.state;
+      }, 2400);
+    });
+  }
+</script>
+
+<style>
+  .copy {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    background: transparent;
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius);
+    padding: 0.4rem 0.6rem;
+    cursor: pointer;
+    transition: border-color 140ms ease, color 140ms ease, background-color 140ms ease;
+  }
+
+  .copy:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+
+  .copy[data-state='done'] {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
+
+  .copy[data-state='failed'] {
+    border-color: var(--accent);
+    color: var(--accent-ink);
+  }
+</style>

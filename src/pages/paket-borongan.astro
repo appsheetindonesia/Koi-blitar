@@ -1,0 +1,130 @@
+---
+import PaketPage from '../layouts/PaketPage.astro';
+import PaketTable from '../components/PaketTable.astro';
+import WaButton from '../components/WaButton.astro';
+import { paketBorongan } from '../data/site';
+---
+
+<PaketPage
+  title="Paket Borongan Koi 20 cm ke atas | Duta Koi Blitar"
+  description="Borongan koi ukuran 20 cm ke atas dari farm Blitar: 5 sampai 30 ekor, grade A dan A pilihan. Untuk kolam display, reseller, dan pengadaan kolam umum."
+  heading="Ikan 20 cm ke atas, diambil per kelompok"
+  intro="Paket ini untuk Anda yang tidak mau menunggu pembesaran. Ukurannya sudah masuk tahap display, jadi corak dan bentuk tubuh bisa dinilai langsung dari video yang kami kirim sebelum deal."
+  image="/img/borongan-lima.webp"
+  imageAlt="Lima koi Kohaku dan Sanke berenang di bak tarpaulin biru"
+  waMessage="Halo Duta Koi Blitar, saya mau paket borongan ukuran ... cm up, sekitar ... ekor. Boleh dikirim video stoknya?"
+  waLabel="Tanya stok borongan"
+  caption="Kelompok borongan di bak tarpaulin. Satu bak mewakili satu paket yang siap kirim."
+>
+  <section class="section">
+    <div class="rule-head">
+      <h2>Pilihan kelompok</h2>
+      <p class="small" style="margin:0">Jumlah ekor dalam satu paket bisa bergerak sedikit mengikuti stok.</p>
+    </div>
+    <PaketTable items={paketBorongan} kategori="paket borongan" />
+  </section>
+
+  <section class="section">
+    <div class="split">
+      <div>
+        <h2>Kenapa jumlah ekor ditulis sebagai rentang</h2>
+        <p>
+          Kolam tidak menghasilkan jumlah yang sama setiap minggu. Karena itu
+          daftar di atas menulis rentang, misalnya “borongan 20 ekor” berisi
+          20–30 ekor. Jumlah dan ukuran akhirnya kami konfirmasi lewat video
+          sebelum Anda membayar DP.
+        </p>
+        <p>
+          Grade A berarti ikan sudah lolos sortir bentuk dan warna. Grade A
+          pilihan berarti kami menyaring lagi dari kelompok A untuk corak yang
+          lebih rapi. Semua grade tetap difoto ulang sebelum pengiriman.
+        </p>
+      </div>
+      <div class="split__aside">
+        <h3>Cara kami mengirim</h3>
+        <ol class="steps">
+          <li>
+            <span class="steps__n">1</span>
+            <span>Anda sebut paket, ukuran, dan kota tujuan.</span>
+          </li>
+          <li>
+            <span class="steps__n">2</span>
+            <span>Kami kirim video kelompok yang tersedia hari itu.</span>
+          </li>
+          <li>
+            <span class="steps__n">3</span>
+            <span>Setelah deal, DP 50% dan jadwal pengiriman disepakati.</span>
+          </li>
+          <li>
+            <span class="steps__n">4</span>
+            <span>Ikan yang sudah lolos karantina dan QC dikemas per box.</span>
+          </li>
+        </ol>
+        <WaButton
+          label="Minta video stok borongan"
+          message="Halo Duta Koi Blitar, saya mau paket borongan ukuran ... cm up, sekitar ... ekor. Boleh dikirim video stok yang ada sekarang?"
+        />
+      </div>
+    </div>
+  </section>
+</PaketPage>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+
+  .split h2 {
+    margin-bottom: 1.1rem;
+  }
+
+  .split__aside {
+    border-left: 1px solid var(--rule);
+    padding-left: clamp(1rem, 2vw, 2rem);
+  }
+
+  .split__aside h3 {
+    margin-bottom: 1rem;
+  }
+
+  .steps {
+    list-style: none;
+    margin-bottom: 1.6rem;
+    font-size: 0.94rem;
+  }
+
+  .steps li {
+    display: flex;
+    gap: 0.75rem;
+    padding-block: 0.6rem;
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  .steps li:last-child {
+    border-bottom: 0;
+  }
+
+  .steps__n {
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    color: var(--accent-ink);
+    min-width: 1rem;
+  }
+
+  @media (max-width: 900px) {
+    .split {
+      grid-template-columns: 1fr;
+    }
+    .split__aside {
+      border-left: 0;
+      border-top: 1px solid var(--rule);
+      padding-left: 0;
+      padding-top: 1.4rem;
+    }
+  }
+</style>

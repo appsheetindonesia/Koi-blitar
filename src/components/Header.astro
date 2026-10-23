@@ -1,0 +1,260 @@
+---
+import { site, waLink } from '../data/site';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const links = [
+  { href: '/', label: 'Beranda' },
+  { href: '/paket-bibitan', label: 'Bibitan' },
+  { href: '/paket-borongan', label: 'Borongan' },
+  { href: '/paket-custome', label: 'Mix custom' },
+  { href: '/paket-satuan', label: 'Satuan' },
+  { href: '/cara-pemesanan', label: 'Cara pesan' },
+  { href: '/kontak-kami', label: 'Kontak' },
+];
+const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+
+<header class="masthead">
+  <div class="wrap masthead__inner">
+    <a class="brand" href="/" aria-label="Duta Koi Blitar — beranda">
+      <img src="/img/logo-duta-koi.png" alt="" width="46" height="48" />
+      <span class="brand__text">
+        <span class="brand__name">Duta Koi Blitar</span>
+        <span class="brand__sub">Farm Modangan, Nglegok</span>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Navigasi utama">
+      {links.map((l) => (
+        <a href={l.href} aria-current={isActive(l.href) ? 'page' : undefined}>{l.label}</a>
+      ))}
+    </nav>
+
+    <a class="masthead__wa" href={waLink('Halo Duta Koi Blitar, saya mau tanya stok koi.')}>
+      <span class="masthead__wa-label">WhatsApp</span>
+      <span class="masthead__wa-num">{site.waDisplay}</span>
+    </a>
+
+    <details class="menu">
+      <summary aria-label="Buka menu">
+        <span class="menu__bar"></span>
+        <span class="menu__bar"></span>
+        <span class="menu__label">Menu</span>
+      </summary>
+      <nav class="menu__panel" aria-label="Navigasi seluler">
+        {links.map((l) => (
+          <a href={l.href} aria-current={isActive(l.href) ? 'page' : undefined}>{l.label}</a>
+        ))}
+        <a href={waLink('Halo Duta Koi Blitar, saya mau tanya stok koi.')}>WhatsApp {site.waDisplay}</a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  .masthead {
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper);
+  }
+
+  .masthead__inner {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    min-height: 5.25rem;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .brand img {
+    width: 42px;
+    height: 44px;
+    object-fit: contain;
+  }
+
+  .brand__text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+
+  .brand__name {
+    font-family: var(--serif);
+    font-size: 1.22rem;
+    letter-spacing: -0.01em;
+  }
+
+  .brand__sub {
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    color: var(--ink-faint);
+    margin-top: 0.22rem;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 1.15rem;
+    margin-left: auto;
+    font-size: 0.875rem;
+  }
+
+  .nav a {
+    text-decoration: none;
+    padding-block: 0.35rem;
+    border-bottom: 1px solid transparent;
+    color: var(--ink-soft);
+  }
+
+  .nav a:hover {
+    color: var(--ink);
+    border-bottom-color: var(--rule-strong);
+  }
+
+  .nav a[aria-current='page'] {
+    color: var(--ink);
+    border-bottom-color: var(--accent);
+  }
+
+  .masthead__wa {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+    text-decoration: none;
+    padding-left: 1.15rem;
+    border-left: 1px solid var(--rule);
+    flex-shrink: 0;
+  }
+
+  .masthead__wa-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    font-weight: 600;
+  }
+
+  .masthead__wa-num {
+    font-size: 0.9rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .menu {
+    display: none;
+    position: relative;
+    margin-left: auto;
+  }
+
+  .menu summary {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    list-style: none;
+    cursor: pointer;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .menu summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .menu__bar {
+    display: block;
+    width: 14px;
+    height: 1px;
+    background: var(--ink);
+  }
+
+  .menu__bar:nth-child(2) {
+    margin-top: 3px;
+    width: 10px;
+  }
+
+  .menu__label {
+    margin-left: 0.25rem;
+  }
+
+  .menu__panel {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 0.5rem);
+    min-width: 15rem;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    border-radius: var(--radius);
+    padding: 0.4rem 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 20;
+    box-shadow: 0 12px 24px -18px rgba(23, 20, 15, 0.5);
+  }
+
+  .menu__panel a {
+    padding: 0.7rem 1rem;
+    text-decoration: none;
+    font-size: 0.95rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .menu__panel a:last-child {
+    border-bottom: 0;
+    border-top: 1px solid var(--ink);
+    margin-top: 0.35rem;
+    color: var(--accent-ink);
+    font-weight: 600;
+  }
+
+  .menu__panel a[aria-current='page'] {
+    font-weight: 600;
+    background: var(--paper-deep);
+  }
+
+  @media (max-width: 1080px) {
+    .nav,
+    .masthead__wa {
+      display: none;
+    }
+    .menu {
+      display: block;
+    }
+  }
+
+  /* Mobile: navigasi pindah ke bottom navbar, tombol Menu tidak dipakai. */
+  @media (max-width: 720px) {
+    .menu {
+      display: none;
+    }
+  }
+
+  /* Layar 320–360 px: rapikan agar tidak ada scroll horizontal. */
+  @media (max-width: 380px) {
+    .masthead__inner {
+      gap: 0.75rem;
+    }
+    .brand img {
+      width: 34px;
+      height: 36px;
+    }
+    .brand__name {
+      font-size: 1.05rem;
+    }
+    .brand__sub {
+      display: none;
+    }
+    .menu summary {
+      padding: 0.55rem 0.6rem;
+    }
+  }
+</style>

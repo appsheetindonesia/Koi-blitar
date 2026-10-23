@@ -1,0 +1,227 @@
+---
+import PaketPage from '../layouts/PaketPage.astro';
+import WaButton from '../components/WaButton.astro';
+import { varietasSatuan, fotoSatuan } from '../data/site';
+---
+
+<PaketPage
+  title="Koi Satuan Grade SQ | Duta Koi Blitar"
+  description="Koi satuan grade SQ dari farm Blitar: Kohaku, Showa, Doitsu Sanke, dan Kiko. Sebutkan varietas dan ukuran, tim kami kirim video ikan yang tersedia."
+  heading="Satu ekor, dinilai satu per satu"
+  intro="Untuk koleksi, ikan dipilih per ekor. Sebutkan varietas dan ukuran yang Anda cari, lalu tim kami memvideokan ikan yang sesuai permintaan sebelum Anda memutuskan."
+  image="/img/kohaku.webp"
+  imageAlt="Koi putih dengan corak merah difoto dari atas di bak biru"
+  waMessage="Halo Duta Koi Blitar, saya cari koi satuan grade SQ. Varietas yang saya minati: ... . Ukuran sekitar ... cm."
+  waLabel="Tanya koi satuan"
+  caption="Foto dari bak farm. Sebelum deal, kami kirim video ikan yang benar-benar akan dikirim."
+>
+  <section class="section">
+    <div class="rule-head">
+      <h2>Varietas satuan yang kami tawarkan</h2>
+      <p class="small" style="margin:0">Semua grade SQ. Ketersediaan per varietas mengikuti stok.</p>
+    </div>
+
+    <ul class="varian">
+      {varietasSatuan.map((v) => (
+        <li
+          data-wa-msg={`https://wa.me/6285799449920?text=${encodeURIComponent(
+            `Halo Duta Koi Blitar, saya cari koi satuan ${v.nama} grade SQ. Apa yang tersedia sekarang? Boleh dikirim videonya?`
+          )}`}
+          data-wa-label={`Tanya ${v.nama}`}
+        >
+          <div>
+            <h3>{v.nama}</h3>
+            <p>{v.ket}</p>
+          </div>
+          <a
+            href={`https://wa.me/6285799449920?text=${encodeURIComponent(
+              `Halo Duta Koi Blitar, saya cari koi satuan ${v.nama} grade SQ. Apa yang tersedia sekarang? Boleh dikirim videonya?`
+            )}`}
+            target="_blank"
+            rel="noopener"
+          >
+            Tanya {v.nama} <span aria-hidden="true">→</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="section">
+    <div class="rule-head">
+      <h2>Contoh ikan dari bak kami</h2>
+      <p class="small" style="margin:0">
+        Bukan katalog tetap — hanya gambaran corak dan kualitas yang biasa keluar dari farm.
+      </p>
+    </div>
+    <ul class="galeri">
+      {fotoSatuan.map((f) => (
+        <li>
+          <img class="photo" src={f.gambar} alt={f.alt} width="900" height="900" loading="lazy" />
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="section">
+    <div class="split">
+      <div>
+        <h2>Arti grade di halaman ini</h2>
+        <p>
+          <strong>SQ (Super Quality)</strong> adalah grade untuk koi satuan di
+          halaman ini. Farm juga menyediakan kualitas A sampai high quality untuk
+          koleksi jumbo; ketersediaannya mengikuti panen.
+        </p>
+        <p>
+          Karena stok bergerak, halaman ini menampilkan varietas yang biasa
+          tersedia, bukan katalog tetap. Sebelum pembayaran, minta video ikan
+          yang akan dikirim lalu nilai sendiri coraknya.
+        </p>
+      </div>
+      <div class="split__aside">
+        <h3>Pertanyaan yang sering masuk</h3>
+        <dl class="faq">
+          <div>
+            <dt>Bisa minta video dulu?</dt>
+            <dd>Bisa. Tim kami memvideokan ikan yang sesuai permintaan Anda, dan Anda menilai dari situ.</dd>
+          </div>
+          <div>
+            <dt>Bisa gabung beberapa ekor?</dt>
+            <dd>Bisa. Beberapa ekor satuan dapat digabung dalam satu box untuk menekan ongkir.</dd>
+          </div>
+          <div>
+            <dt>Berapa lama sampai?</dt>
+            <dd>Tergantung kota. Kami sebutkan estimasi saat cek ongkir, sebelum Anda transfer.</dd>
+          </div>
+        </dl>
+        <WaButton
+          label="Tanya koi satuan"
+          message="Halo Duta Koi Blitar, saya cari koi satuan grade SQ. Varietas yang saya minati: ... . Ukuran sekitar ... cm. Apa yang tersedia?"
+        />
+      </div>
+    </div>
+  </section>
+</PaketPage>
+
+<style>
+  .varian {
+    list-style: none;
+    margin-top: 1.5rem;
+    border-top: 1px solid var(--ink);
+  }
+
+  .varian li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 1.15rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .varian h3 {
+    font-size: 1.35rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .varian p {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    margin: 0;
+    max-width: 48ch;
+  }
+
+  .varian a {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    color: var(--accent-ink);
+  }
+
+  .varian a:hover {
+    text-decoration: underline;
+  }
+
+  .galeri {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .galeri .photo {
+    aspect-ratio: 1 / 1;
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+
+  .split h2 {
+    margin-bottom: 1.1rem;
+  }
+
+  .split__aside {
+    border-left: 1px solid var(--rule);
+    padding-left: clamp(1rem, 2vw, 2rem);
+  }
+
+  .split__aside h3 {
+    margin-bottom: 1rem;
+  }
+
+  .faq {
+    margin: 0 0 1.6rem;
+    font-size: 0.93rem;
+  }
+
+  .faq > div {
+    padding-block: 0.7rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .faq > div:last-child {
+    border-bottom: 0;
+  }
+
+  .faq dt {
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+  }
+
+  .faq dd {
+    margin: 0;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 980px) {
+    .galeri {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .split {
+      grid-template-columns: 1fr;
+    }
+    .split__aside {
+      border-left: 0;
+      border-top: 1px solid var(--rule);
+      padding-left: 0;
+      padding-top: 1.4rem;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .varian li {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+</style>

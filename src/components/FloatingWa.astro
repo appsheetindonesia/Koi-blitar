@@ -1,0 +1,114 @@
+---
+import { waLink } from '../data/site';
+
+interface Props {
+  message: string;
+  label?: string;
+}
+
+const { message, label = 'Tanya via WhatsApp' } = Astro.props;
+---
+
+<a
+  class="float-wa"
+  id="float-wa"
+  href={waLink(message)}
+  target="_blank"
+  rel="noopener"
+  data-default-label={label}
+  data-default-href={waLink(message)}
+>
+  <span class="float-wa__label" id="float-wa-label">{label}</span>
+  <span class="float-wa__arrow" aria-hidden="true">→</span>
+</a>
+
+<script>
+  const button = document.getElementById('float-wa') as HTMLAnchorElement | null;
+  const labelEl = document.getElementById('float-wa-label');
+
+  if (button && labelEl) {
+    const defaultLabel = button.dataset.defaultLabel ?? labelEl.textContent ?? '';
+    const defaultHref = button.dataset.defaultHref ?? button.href;
+    const targets = Array.from(document.querySelectorAll<HTMLElement>('[data-wa-msg]'));
+    let current: HTMLElement | null = null;
+
+    const apply = (target: HTMLElement | null) => {
+      if (target === current) return;
+      current = target;
+      labelEl.textContent = target?.dataset.waLabel ?? defaultLabel;
+      button.href = target?.dataset.waMsg ?? defaultHref;
+    };
+
+    // Baris yang melewati garis tengah layar dianggap "sedang dilihat".
+    const sync = () => {
+      // Tombol muncul setelah hero terlewati, supaya CTA pertama tidak tertutup.
+      button.dataset.visible = window.scrollY > 260 ? 'true' : 'false';
+
+      const mid = window.innerHeight / 2;
+      const hit = targets.find((t) => {
+        const r = t.getBoundingClientRect();
+        return r.top <= mid && r.bottom >= mid;
+      });
+      apply(hit ?? current);
+    };
+
+    sync();
+    window.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync);
+  }
+</script>
+
+<style>
+  .float-wa {
+    display: none;
+  }
+
+  @media (max-width: 720px) {
+    .float-wa {
+      position: fixed;
+      right: 0.9rem;
+      bottom: calc(var(--tabbar-h) + var(--tabbar-gap) + env(safe-area-inset-bottom, 0px) + 0.9rem);
+      z-index: 29;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      max-width: calc(100vw - 1.8rem);
+      min-height: 2.75rem;
+      padding: 0.7rem 0.9rem;
+      background: var(--ink);
+      color: var(--paper);
+      border: 1px solid var(--ink);
+      border-radius: var(--radius);
+      font-size: 0.85rem;
+      font-weight: 600;
+      line-height: 1.1;
+      text-decoration: none;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(0.35rem);
+      transition: transform 160ms ease;
+    }
+
+    .float-wa[data-visible='true'] {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+    }
+
+    .float-wa:hover {
+      color: #fff;
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .float-wa__label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .float-wa__arrow {
+      flex-shrink: 0;
+    }
+  }
+</style>

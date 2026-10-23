@@ -1,0 +1,238 @@
+---
+import Base from '../layouts/Base.astro';
+import WaButton from '../components/WaButton.astro';
+import { site } from '../data/site';
+---
+
+<Base
+  title="Tentang Duta Koi Blitar — farm di Modangan, Nglegok"
+  description="Duta Koi Blitar adalah farm koi di Desa Modangan, Kecamatan Nglegok, Kabupaten Blitar. Dua titik kandang, penjualan bibitan sampai jumbo, dengan karantina dan QC sebelum kirim."
+  image="/img/bibitan-ember.webp"
+>
+  <header class="head">
+    <div class="wrap head__grid">
+      <div>
+        <h1>Dua kandang di Modangan, satu titik jual</h1>
+        <p class="lede measure">
+          Duta Koi Blitar berfokus pada penjualan ikan koi dari Desa Modangan,
+          Kecamatan Nglegok — salah satu daerah pembudidaya koi di Blitar.
+          Pilihannya beragam, dari grade A sampai high quality, mulai dari
+          bibitan hingga ukuran 75 cm up.
+        </p>
+      </div>
+      <figure class="head__figure">
+        <img
+          class="photo"
+          src="/img/bibitan-ember.webp"
+          alt="Anakan koi warna-warni di ember biru saat proses sortir"
+          width="900"
+          height="900"
+        />
+        <figcaption class="figure-note">Sortir anakan di ember sebelum dikelompokkan per ukuran.</figcaption>
+      </figure>
+    </div>
+  </header>
+
+  <section class="section section--flush">
+    <div class="wrap story">
+      <div class="story__col">
+        <h2>Kenapa harganya bisa lebih ringan</h2>
+        <p>
+          Kami berada di jalur pertama penjualan: dari petani koi di Blitar
+          langsung ke pembeli. Tidak ada perantara yang menambah harga, dan
+          pertanyaan soal asal ikan bisa dijawab langsung oleh orang yang
+          memeliharanya.
+        </p>
+        <p>
+          Konsekuensinya juga jujur: stok tidak selalu lengkap. Panen bergerak
+          mengikuti musim, dan grade tinggi seperti jumbo super jumlahnya
+          terbatas. Karena itu kami mengirim video stok sesuai permintaan
+          daripada memasang katalog permanen yang menyesatkan.
+        </p>
+      </div>
+      <div class="story__col">
+        <h2>Yang kami kerjakan sebelum ikan berangkat</h2>
+        <ul class="steps">
+          <li>
+            <span class="steps__n">Karantina</span>
+            <span>Ikan yang dikirim sudah melewati karantina di farm.</span>
+          </li>
+          <li>
+            <span class="steps__n">Quality control</span>
+            <span>Ikan dipastikan lolos QC sebelum masuk daftar siap kirim.</span>
+          </li>
+          <li>
+            <span class="steps__n">Video</span>
+            <span>Permintaan Anda dicatat, lalu ikan yang sesuai difoto dan divideo.</span>
+          </li>
+          <li>
+            <span class="steps__n">Kemas</span>
+            <span>Setelah deal dan DP, ikan dikemas untuk pengiriman.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap visit">
+      <div>
+        <h2>Kalau ingin datang langsung</h2>
+        <p class="measure">
+          Kami punya dua titik kandang di Desa Modangan: kantor I dan MaBes Duta
+          Koi II. Keduanya dipakai untuk pemeliharaan, jadi tidak selalu ada
+          orang yang bisa menemani melihat ikan. Hubungi dulu agar kedatangan
+          Anda tidak sia-sia.
+        </p>
+      </div>
+      <dl class="visit__list">
+        <div>
+          <dt>Alamat</dt>
+          <dd>{site.address.street}, {site.address.locality}, {site.address.region} {site.address.postalCode}</dd>
+        </div>
+        <div>
+          <dt>Jam</dt>
+          <dd>{site.hours}</dd>
+        </div>
+        <div>
+          <dt>Telepon / WhatsApp</dt>
+          <dd>{site.waDisplay}</dd>
+        </div>
+      </dl>
+    </div>
+    <div class="wrap" style="margin-top:2rem">
+      <WaButton
+        label="Atur waktu kunjungan"
+        message="Halo Duta Koi Blitar, saya mau datang ke farm. Kira-kira kapan waktu yang tepat supaya ada yang bisa menemani lihat ikan?"
+      />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head {
+    padding-block: clamp(2.25rem, 4.5vw, 3.75rem) clamp(2rem, 3.5vw, 2.75rem);
+  }
+
+  .head__grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: center;
+  }
+
+  .head h1 {
+    margin-block: 0.7rem 1.2rem;
+  }
+
+  .head__figure {
+    margin: 0;
+  }
+
+  .head__figure .photo {
+    aspect-ratio: 4 / 3;
+  }
+
+  .story {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .story h2 {
+    margin-bottom: 1rem;
+  }
+
+  .story__col:last-child {
+    border-left: 1px solid var(--rule);
+    padding-left: clamp(1rem, 2vw, 2rem);
+  }
+
+  .steps {
+    list-style: none;
+    font-size: 0.93rem;
+  }
+
+  .steps li {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    gap: 1rem;
+    padding-block: 0.65rem;
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  .steps li:last-child {
+    border-bottom: 0;
+  }
+
+  .steps__n {
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 0.85rem;
+  }
+
+  .visit {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+
+  .visit h2 {
+    margin-bottom: 1rem;
+  }
+
+  .visit__list {
+    margin: 0;
+    border-top: 1px solid var(--ink);
+  }
+
+  .visit__list > div {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: 1rem;
+    padding-block: 0.75rem;
+    border-bottom: 1px solid var(--rule);
+    font-size: 0.93rem;
+  }
+
+  .visit__list dt {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding-top: 0.15rem;
+  }
+
+  .visit__list dd {
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 900px) {
+    .head__grid,
+    .story,
+    .visit {
+      grid-template-columns: 1fr;
+    }
+    .head__figure {
+      order: -1;
+    }
+    .story__col:last-child {
+      border-left: 0;
+      border-top: 1px solid var(--rule);
+      padding-left: 0;
+      padding-top: 1.5rem;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .steps li,
+    .visit__list > div {
+      grid-template-columns: 1fr;
+      gap: 0.2rem;
+    }
+  }
+</style>
