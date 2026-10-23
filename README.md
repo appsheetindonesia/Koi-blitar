@@ -59,7 +59,7 @@ Tombol WhatsApp melayang (juga hanya di bawah 720px) duduk tepat di atas bottom 
 
 Kalau suatu saat situs harus dilayani dari subpath (`/Koi-blitar`), jangan hanya mengubah `base`; semua `href` dan `src` root-absolute di `src/` juga harus diberi prefiks, misalnya lewat helper di `src/data/site.ts`.
 
-**Custom domain.** Sekali saja, di repo: *Settings → Pages → Build and deployment → Source: GitHub Actions*, lalu isi *Custom domain* dengan `dutakoiblitar.id` dan aktifkan *Enforce HTTPS* setelah sertifikat terbit. Tidak perlu file `CNAME` di repo: pada deploy lewat Actions, domain diambil dari pengaturan repo dan file `CNAME` diabaikan GitHub.
+**Custom domain.** Sudah aktif di repo: Pages memakai *Source: GitHub Actions* dengan custom domain `dutakoiblitar.id`. Tidak perlu file `CNAME` di repo — pada deploy lewat Actions, domain diambil dari pengaturan repo dan file `CNAME` diabaikan GitHub. *Enforce HTTPS* belum bisa diaktifkan karena sertifikat baru terbit setelah DNS mengarah ke GitHub; aktifkan setelah itu.
 
 **DNS.** Apex `dutakoiblitar.id` diarahkan ke GitHub Pages, bukan ke IP hosting lama:
 
@@ -69,7 +69,7 @@ Kalau suatu saat situs harus dilayani dari subpath (`/Koi-blitar`), jangan hanya
 | AAAA | `@` | `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153` |
 | CNAME | `www` | `appsheetindonesia.github.io` |
 
-Per 23 Oktober 2026 domain masih menunjuk ke `202.10.43.110` / `2001:df0:27b:3::4:608c` (hosting lama), jadi situs baru belum akan tampil di domain tersebut sebelum record A/AAAA diganti.
+**Status per 23 Oktober 2026.** Workflow sudah berjalan sukses (build + deploy), dan `https://appsheetindonesia.github.io/Koi-blitar/index.html` sudah dialihkan GitHub ke `dutakoiblitar.id`. Tapi apex masih menunjuk ke `202.10.43.110` / `2001:df0:27b:3::4:608c` (hosting lama, server LiteSpeed), jadi `https://dutakoiblitar.id/` masih menyajikan situs lama sampai record A/AAAA diganti. Setelah DNS diarahkan, minta penerbitan sertifikat di *Settings → Pages*, lalu aktifkan *Enforce HTTPS*.
 
 ## Design
 
