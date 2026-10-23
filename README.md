@@ -53,7 +53,9 @@ Tombol WhatsApp melayang (juga hanya di bawah 720px) duduk tepat di atas bottom 
 
 ## Deploy ke GitHub Pages
 
-`.github/workflows/deploy.yml` membangun situs dan menerbitkannya setiap kali `main` di-push (atau lewat tombol *Run workflow*). Alurnya: `npm ci` → `npm run build` → `actions/upload-pages-artifact` → `actions/deploy-pages`, memakai `GITHUB_TOKEN` dengan izin `pages: write` dan `id-token: write`. Tidak ada secret yang perlu dibuat.
+`.github/workflows/deploy.yml` membangun situs dan menerbitkannya setiap kali `main` di-push (atau lewat tombol *Run workflow*). Tiga job: `build` (`npm ci` → `npm run build` → `actions/upload-pages-artifact` → unggah `dist` sebagai artefak biasa), `cek` (unduh `dist` → `node scripts/check-links.mjs dist`), lalu `deploy` yang menunggu keduanya. Memakai `GITHUB_TOKEN` dengan izin `pages: write` dan `id-token: write`. Tidak ada secret yang perlu dibuat.
+
+**Cek tautan.** `cek` gagal — dan `deploy` tidak jalan — bila ada `href`/`src` di HTML `dist` yang menunjuk ke file yang tidak ada. Skrip `scripts/check-links.mjs` memeriksa atribut `href` dan `src` di semua `.html`, melewati nilai kosong, anchor `#...`, dan URL eksternal/`mailto:`/`https:`; path root-absolute (`/img/x.webp`, `/paket-bibitan`) diselesaikan dari akar `dist`, path relatif dari folder halaman. Folder dihitung ada bila berisi `index.html`. Jalankan lokal dengan `npm run check:links` setelah `npm run build`; pesan gagalnya menyebut halaman dan nilai atributnya, misalnya `paket-satuan\index.html → /img/showa.webp`.
 
 **Base path.** `astro.config.mjs` memakai `base: '/'` karena situs dilayani dari custom domain di akar domain. Ini bukan pilihan kosmetik: tautan navigasi (`/paket-bibitan`) dan semua foto (`/img/...`) ditulis root-absolute, jadi situs hanya berfungsi bila dilayani dari akar domain. Karena itu URL project Pages `https://appsheetindonesia.github.io/Koi-blitar/` tidak bisa dipakai sebagai pratinjau — setelah custom domain aktif, GitHub justru mengalihkan URL itu ke `dutakoiblitar.id`.
 
