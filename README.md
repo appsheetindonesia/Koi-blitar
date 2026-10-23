@@ -38,6 +38,7 @@ scripts/images.mjs      # konversi ulang foto sumber ke WebP
 ## Catatan isi
 
 - Harga sengaja tidak dicantumkan. Stok dan harga berubah harian; setiap paket punya tombol WhatsApp yang mengisi pesan otomatis.
+- Setiap baris paket dan setiap varietas satuan membawa fotonya sendiri (`gambar` + `alt` di `src/data/site.ts`), jadi tidak ada galeri foto terpisah dari daftar.
 - Alamat, jam layanan, nomor WhatsApp, syarat DP 50%, dan nomor rekening BCA diambil dari situs lama dan tidak diubah.
 - Semua CTA mengarah ke `wa.me/6285799449920` dengan pesan yang sudah terisi sesuai paket.
 

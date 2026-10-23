@@ -1,7 +1,7 @@
 ---
 import PaketPage from '../layouts/PaketPage.astro';
 import WaButton from '../components/WaButton.astro';
-import { varietasSatuan, fotoSatuan } from '../data/site';
+import { varietasSatuan } from '../data/site';
 ---
 
 <PaketPage
@@ -9,8 +9,8 @@ import { varietasSatuan, fotoSatuan } from '../data/site';
   description="Koi satuan grade SQ dari farm Blitar: Kohaku, Showa, Doitsu Sanke, dan Kiko. Sebutkan varietas dan ukuran, tim kami kirim video ikan yang tersedia."
   heading="Satu ekor, dinilai satu per satu"
   intro="Untuk koleksi, ikan dipilih per ekor. Sebutkan varietas dan ukuran yang Anda cari, lalu tim kami memvideokan ikan yang sesuai permintaan sebelum Anda memutuskan."
-  image="/img/kohaku.webp"
-  imageAlt="Koi putih dengan corak merah difoto dari atas di bak biru"
+  image="/img/showa-gelap.webp"
+  imageAlt="Koi Showa besar berenang di bak biru"
   waMessage="Halo Duta Koi Blitar, saya cari koi satuan grade SQ. Varietas yang saya minati: ... . Ukuran sekitar ... cm."
   waLabel="Tanya koi satuan"
   caption="Foto dari bak farm. Sebelum deal, kami kirim video ikan yang benar-benar akan dikirim."
@@ -29,7 +29,15 @@ import { varietasSatuan, fotoSatuan } from '../data/site';
           )}`}
           data-wa-label={`Tanya ${v.nama}`}
         >
-          <div>
+          <img
+            class="varian__foto"
+            src={v.gambar}
+            alt={v.alt}
+            width="900"
+            height="900"
+            loading="lazy"
+          />
+          <div class="varian__text">
             <h3>{v.nama}</h3>
             <p>{v.ket}</p>
           </div>
@@ -42,22 +50,6 @@ import { varietasSatuan, fotoSatuan } from '../data/site';
           >
             Tanya {v.nama} <span aria-hidden="true">→</span>
           </a>
-        </li>
-      ))}
-    </ul>
-  </section>
-
-  <section class="section">
-    <div class="rule-head">
-      <h2>Contoh ikan dari bak kami</h2>
-      <p class="small" style="margin:0">
-        Bukan katalog tetap — hanya gambaran corak dan kualitas yang biasa keluar dari farm.
-      </p>
-    </div>
-    <ul class="galeri">
-      {fotoSatuan.map((f) => (
-        <li>
-          <img class="photo" src={f.gambar} alt={f.alt} width="900" height="900" loading="lazy" />
         </li>
       ))}
     </ul>
@@ -111,12 +103,20 @@ import { varietasSatuan, fotoSatuan } from '../data/site';
   }
 
   .varian li {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1.5rem;
+    display: grid;
+    grid-template-columns: 84px 1fr auto;
+    align-items: center;
+    gap: 1.25rem;
     padding-block: 1.15rem;
     border-bottom: 1px solid var(--rule);
+  }
+
+  .varian__foto {
+    width: 84px;
+    height: 84px;
+    object-fit: cover;
+    border-radius: var(--radius);
+    background: var(--paper-deep);
   }
 
   .varian h3 {
@@ -141,18 +141,6 @@ import { varietasSatuan, fotoSatuan } from '../data/site';
 
   .varian a:hover {
     text-decoration: underline;
-  }
-
-  .galeri {
-    list-style: none;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 0.75rem;
-    margin-top: 1.5rem;
-  }
-
-  .galeri .photo {
-    aspect-ratio: 1 / 1;
   }
 
   .split {
@@ -200,12 +188,6 @@ import { varietasSatuan, fotoSatuan } from '../data/site';
     line-height: 1.5;
   }
 
-  @media (max-width: 980px) {
-    .galeri {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
   @media (max-width: 900px) {
     .split {
       grid-template-columns: 1fr;
@@ -220,8 +202,16 @@ import { varietasSatuan, fotoSatuan } from '../data/site';
 
   @media (max-width: 560px) {
     .varian li {
-      flex-direction: column;
-      gap: 0.5rem;
+      grid-template-columns: 64px 1fr;
+      align-items: start;
+      gap: 0.85rem 0.9rem;
+    }
+    .varian__foto {
+      width: 64px;
+      height: 64px;
+    }
+    .varian a {
+      grid-column: 2;
     }
   }
 </style>
