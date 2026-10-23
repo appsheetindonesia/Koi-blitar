@@ -55,12 +55,9 @@ Tombol WhatsApp melayang (juga hanya di bawah 720px) duduk tepat di atas bottom 
 
 `.github/workflows/deploy.yml` membangun situs dan menerbitkannya setiap kali `main` di-push (atau lewat tombol *Run workflow*). Alurnya: `npm ci` → `npm run build` → `actions/upload-pages-artifact` → `actions/deploy-pages`, memakai `GITHUB_TOKEN` dengan izin `pages: write` dan `id-token: write`. Tidak ada secret yang perlu dibuat.
 
-**Base path.** Karena situs dilayani dari custom domain di root, `astro.config.mjs` memakai `base: '/'` — bukan `/Koi-blitar`. Kalau suatu saat domain dilepas dan situs hanya dilayani dari `https://appsheetindonesia.github.io/Koi-blitar/`, ubah dua baris di `astro.config.mjs`:
+**Base path.** `astro.config.mjs` memakai `base: '/'` karena situs dilayani dari custom domain di akar domain. Ini bukan pilihan kosmetik: tautan navigasi (`/paket-bibitan`) dan semua foto (`/img/...`) ditulis root-absolute, jadi situs hanya berfungsi bila dilayani dari akar domain. Karena itu URL project Pages `https://appsheetindonesia.github.io/Koi-blitar/` tidak bisa dipakai sebagai pratinjau — setelah custom domain aktif, GitHub justru mengalihkan URL itu ke `dutakoiblitar.id`.
 
-```js
-site: 'https://appsheetindonesia.github.io',
-base: '/Koi-blitar',
-```
+Kalau suatu saat situs harus dilayani dari subpath (`/Koi-blitar`), jangan hanya mengubah `base`; semua `href` dan `src` root-absolute di `src/` juga harus diberi prefiks, misalnya lewat helper di `src/data/site.ts`.
 
 **Custom domain.** Sekali saja, di repo: *Settings → Pages → Build and deployment → Source: GitHub Actions*, lalu isi *Custom domain* dengan `dutakoiblitar.id` dan aktifkan *Enforce HTTPS* setelah sertifikat terbit. Tidak perlu file `CNAME` di repo: pada deploy lewat Actions, domain diambil dari pengaturan repo dan file `CNAME` diabaikan GitHub.
 
