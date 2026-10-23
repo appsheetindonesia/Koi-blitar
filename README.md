@@ -51,6 +51,29 @@ Rentang 721–1080px memakai tombol Menu di header (bottom navbar sudah hilang, 
 
 Tombol WhatsApp melayang (juga hanya di bawah 720px) duduk tepat di atas bottom navbar. Tombol muncul setelah hero terlewati, dan labelnya mengikuti baris paket yang melewati garis tengah layar: `data-wa-msg` + `data-wa-label` pada baris tabel. Setelah tabel terlewati, pesan terakhir yang tetap dipakai. Di halaman tanpa daftar paket, tombol memakai pesan default halaman.
 
+## Deploy ke GitHub Pages
+
+`.github/workflows/deploy.yml` membangun situs dan menerbitkannya setiap kali `main` di-push (atau lewat tombol *Run workflow*). Alurnya: `npm ci` → `npm run build` → `actions/upload-pages-artifact` → `actions/deploy-pages`, memakai `GITHUB_TOKEN` dengan izin `pages: write` dan `id-token: write`. Tidak ada secret yang perlu dibuat.
+
+**Base path.** Karena situs dilayani dari custom domain di root, `astro.config.mjs` memakai `base: '/'` — bukan `/Koi-blitar`. Kalau suatu saat domain dilepas dan situs hanya dilayani dari `https://appsheetindonesia.github.io/Koi-blitar/`, ubah dua baris di `astro.config.mjs`:
+
+```js
+site: 'https://appsheetindonesia.github.io',
+base: '/Koi-blitar',
+```
+
+**Custom domain.** Sekali saja, di repo: *Settings → Pages → Build and deployment → Source: GitHub Actions*, lalu isi *Custom domain* dengan `dutakoiblitar.id` dan aktifkan *Enforce HTTPS* setelah sertifikat terbit. Tidak perlu file `CNAME` di repo: pada deploy lewat Actions, domain diambil dari pengaturan repo dan file `CNAME` diabaikan GitHub.
+
+**DNS.** Apex `dutakoiblitar.id` diarahkan ke GitHub Pages, bukan ke IP hosting lama:
+
+| Tipe | Nama | Nilai |
+| --- | --- | --- |
+| A | `@` | `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153` |
+| AAAA | `@` | `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153` |
+| CNAME | `www` | `appsheetindonesia.github.io` |
+
+Per 23 Oktober 2026 domain masih menunjuk ke `202.10.43.110` / `2001:df0:27b:3::4:608c` (hosting lama), jadi situs baru belum akan tampil di domain tersebut sebelum record A/AAAA diganti.
+
 ## Design
 
 Satu aksen (vermilion `#b8331c`), dasar kertas `#f4f1e9`, ink `#17140f`. Tanpa gradient, glass, emoji, atau kartu bertumpuk. Tipografi: Newsreader (display) + Archivo (teks). Radius 2px (`--radius`), pemisah hairline. Khusus foto ikan dipakai sudut oval 14px (`--radius-foto`) supaya foto terpisah jelas dari blok teks yang bersudut tajam.
