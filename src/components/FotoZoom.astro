@@ -1,0 +1,114 @@
+---
+// Satu dialog dipakai bersama oleh semua foto yang punya atribut data-zoom-src.
+---
+
+<dialog class="fotozoom" id="foto-zoom" aria-label="Foto ikan ukuran besar">
+  <div class="fotozoom__bar">
+    <p class="fotozoom__cap"></p>
+    <button class="fotozoom__close" type="button">Tutup</button>
+  </div>
+  <img class="fotozoom__img" alt="" width="1000" height="1000" />
+</dialog>
+
+<script>
+  const dialog = document.getElementById('foto-zoom') as HTMLDialogElement | null;
+
+  if (dialog) {
+    const img = dialog.querySelector('.fotozoom__img') as HTMLImageElement;
+    const cap = dialog.querySelector('.fotozoom__cap') as HTMLElement;
+    const closeBtn = dialog.querySelector('.fotozoom__close') as HTMLButtonElement;
+
+    // Lepas gambar besar begitu dialog tertutup, lewat jalur mana pun.
+    const clear = () => {
+      img.removeAttribute('src');
+      cap.textContent = '';
+    };
+
+    const close = () => {
+      dialog.close();
+      clear();
+    };
+
+    document.addEventListener('click', (event) => {
+      const trigger = (event.target as HTMLElement | null)?.closest<HTMLElement>('[data-zoom-src]');
+      if (!trigger) return;
+
+      event.preventDefault();
+      img.src = trigger.dataset.zoomSrc ?? '';
+      img.alt = trigger.dataset.zoomAlt ?? '';
+      cap.textContent = trigger.dataset.zoomLabel ?? '';
+      dialog.showModal();
+    });
+
+    closeBtn.addEventListener('click', close);
+
+    // Klik di luar panel (area backdrop) menutup dialog.
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) close();
+    });
+
+    // Escape ditangani browser; event close jadi jaring pengaman untuk itu.
+    dialog.addEventListener('close', clear);
+  }
+</script>
+
+<style>
+  .fotozoom {
+    max-width: min(92vw, 56rem);
+    max-height: 92vh;
+    padding: 0.7rem;
+    border: 1px solid var(--ink);
+    border-radius: var(--radius-foto);
+    background: var(--paper);
+    color: var(--ink);
+    overflow: hidden;
+  }
+
+  .fotozoom::backdrop {
+    background: rgba(23, 20, 15, 0.66);
+  }
+
+  .fotozoom__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .fotozoom__cap {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+
+  .fotozoom__close {
+    flex-shrink: 0;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--ink);
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .fotozoom__close:hover {
+    border-color: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  .fotozoom__img {
+    display: block;
+    margin-inline: auto;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: calc(92vh - 4.4rem);
+    object-fit: contain;
+    border-radius: var(--radius-foto);
+    background: var(--paper-deep);
+  }
+</style>
