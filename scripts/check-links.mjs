@@ -1,5 +1,6 @@
 // Gagal bila ada href/src di HTML atau url(...) di CSS dist yang menunjuk ke
-// file yang tidak ada. Pakai: node scripts/check-links.mjs [folder-dist]
+// file yang tidak ada, atau bila sebuah halaman kehilangan title, meta
+// description, atau canonical. Pakai: node scripts/check-links.mjs [folder-dist]
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
 
@@ -22,6 +23,11 @@ const css = [];
 })(root);
 
 const ATTR = /\s(?:href|src)\s*=\s*"([^"]*)"/g;
+const TITLE = /<title[^>]*>([\s\S]*?)<\/title>/i;
+const DESC = /<meta[^>]+name="description"[^>]*>/i;
+const CONTENT = /content="([^"]*)"/i;
+const CANONICAL = /<link[^>]+rel="canonical"[^>]*>/i;
+const HREF = /href="([^"]*)"/i;
 const URL_FN = /url\(\s*(?:"([^"]*)"|'([^']*)'|([^)]*?))\s*\)/g;
 const STYLE_BLOCK = /<style[^>]*>([\s\S]*?)<\/style>/gi;
 const EXTERNAL = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
@@ -32,6 +38,7 @@ function isFile(path) {
 }
 
 const problems = [];
+const metaProblems = [];
 let checked = 0;
 
 // baseDir: folder acuan untuk path relatif (folder halaman, atau folder CSS).
@@ -54,6 +61,17 @@ for (const file of html) {
   const page = relative(root, file);
   const text = readFileSync(file, 'utf8');
 
+  const descriptionTag = text.match(DESC)?.[0];
+  const canonicalTag = text.match(CANONICAL)?.[0];
+  const meta = [
+    ['<title>', text.match(TITLE)?.[1]],
+    ['meta description', descriptionTag?.match(CONTENT)?.[1]],
+    ['canonical', canonicalTag?.match(HREF)?.[1]],
+  ];
+  for (const [label, value] of meta) {
+    if (!value?.trim()) metaProblems.push(`${page} → ${label} kosong atau tidak ada`);
+  }
+
   for (const [, raw] of text.matchAll(ATTR)) check(page, dirname(file), raw);
 
   for (const [, block] of text.matchAll(STYLE_BLOCK)) {
@@ -67,12 +85,18 @@ for (const file of css) {
   for (const [, a, b, c] of text.matchAll(URL_FN)) check(sheet, dirname(file), a ?? b ?? c ?? '');
 }
 
+if (metaProblems.length) {
+  console.error(`Ada ${metaProblems.length} halaman tanpa metadata wajib:`);
+  for (const problem of metaProblems) console.error(`  ${problem}`);
+}
+
 if (problems.length) {
   console.error(`Ada ${problems.length} tautan/aset yang menunjuk ke file hilang:`);
   for (const problem of problems) console.error(`  ${problem}`);
-  process.exit(1);
 }
 
+if (problems.length || metaProblems.length) process.exit(1);
+
 console.log(
-  `OK: ${checked} referensi di ${html.length} halaman dan ${css.length} CSS, semuanya ada di ${relative(process.cwd(), root) || '.'}.`,
+  `OK: ${checked} referensi di ${html.length} halaman dan ${css.length} CSS semuanya ada, dan ${html.length} halaman punya title, description, canonical (${relative(process.cwd(), root) || '.'}).`,
 );

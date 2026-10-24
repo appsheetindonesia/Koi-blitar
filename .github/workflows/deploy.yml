@@ -62,7 +62,7 @@ jobs:
           name: dist
           path: dist
 
-      - name: Cek tautan dan aset
+      - name: Cek tautan, aset, dan metadata
         run: node scripts/check-links.mjs dist
 
   deploy:
